@@ -1,4 +1,4 @@
-<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 
 $files = array();
@@ -49,11 +49,18 @@ $arComponentParameters = array(
         
         "CLASS_HANDLER" => array(
             "PARENT" => "ADDITIONAL_SETTINGS",
-            "NAME" => "PHP класс, наследуемый от класса Compiler(должен реализовывать метод toCss)",
+            "NAME" => "PHP класс, реализующий интерфейс Compiler",
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
             "DEFAULT" => "SassHandler",
             "REFRESH" => "Y",
+        ),
+        
+        "USE_SETADDITIONALCSS" => array(
+            "PARENT" => "ADDITIONAL_SETTINGS",
+            "NAME" => "Подключать скомпилированный css файл через CMain::SetAdditionalCSS()",
+            "TYPE" => "CHECKBOX",
+            "DEFAULT" => "Y",
         ),
         
     ),

@@ -63,10 +63,16 @@ if(file_exists(__DIR__ . '/' . $class_handler . '.php')) {
                 echo $e->getMessage();
             }catch(CompilerException $e){
                 echo $e->getMessage();
+            }catch(Exception $e){
+                echo $e->getMessage();
             }
         }
         
-        echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
+        if($arParams['USE_SETADDITIONALCSS'] == 'Y'){
+            $APPLICATION->SetAdditionalCSS($target);
+        }else{
+            echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
+        }
         
     }
 
