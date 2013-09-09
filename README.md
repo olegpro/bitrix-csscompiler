@@ -15,7 +15,8 @@
 	"FILES" => array(
 		0 => "styles.sass",
 	),
-	"CLASS_HANDLER" => "SassCompiler"
+	"CLASS_HANDLER" => "SassCompiler",
+	"USE_SETADDITIONALCSS" => "Y",
 	),
 	false,
     array("HIDE_ICONS" => "Y")

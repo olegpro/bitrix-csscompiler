@@ -1,4 +1,4 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 
 $files = array();
@@ -49,7 +49,7 @@ $arComponentParameters = array(
         
         "CLASS_HANDLER" => array(
             "PARENT" => "ADDITIONAL_SETTINGS",
-            "NAME" => "PHP класс, реализующий интерфейс Compiler",
+            "NAME" => "PHP класс, наследуемый от класса Compiler(должен реализовывать метод toCss)",
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
             "DEFAULT" => "SassHandler",
