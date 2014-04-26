@@ -1,6 +1,5 @@
 <?
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-//return '';
 
 define('ROOT_DIR', $_SERVER["DOCUMENT_ROOT"]);
 
@@ -77,8 +76,5 @@ if(file_exists(__DIR__ . '/' . $class_handler . '.php')) {
     }
 
 }
-
-
-$this->IncludeComponentTemplate();
 
 ?>
