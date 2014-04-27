@@ -68,6 +68,18 @@ abstract class Compiler{
         return $css;        
     }
     
+    /**
+     * Clear cache composite site
+     * @return void
+     */
+    public function clearAllCHTMLPagesCache(){
+        $arHTMLCacheOptions = CHTMLPagesCache::GetOptions();
+        if (version_compare(SM_VERSION, '14.5.0') >= 0 && isset($arHTMLCacheOptions['COMPOSITE']) && $arHTMLCacheOptions['COMPOSITE'] === 'Y') {
+            CHTMLPagesCache::CleanAll();
+            CHTMLPagesCache::writeStatistic(0, 0, 0, 0, false);
+        }
+    }
+    
 }
 
 class CompilerException extends Exception { }

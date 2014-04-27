@@ -56,6 +56,8 @@ if(file_exists(__DIR__ . '/' . $class_handler . '.php')) {
     
                     $compiler->saveToFile(ROOT_DIR . $target, $css);
                     $compiler->removeOldCss(ROOT_DIR .$path_to_css_files . sprintf($target_file_mask, '*'), sprintf($target_file_mask, $last_modified));
+                    
+                    $compiler->clearAllCHTMLPagesCache();
                 }
             
             }catch(SassException $e){
