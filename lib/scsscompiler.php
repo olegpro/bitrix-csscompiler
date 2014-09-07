@@ -1,7 +1,8 @@
 <?php
 
-require_once (__DIR__ . '/Compiler.php');
-require_once (__DIR__ . '/libs/scssphp/scss.inc.php');
+namespace Olegpro\Csscomplier;
+
+require __DIR__ . '/../libs/scssphp/scss.inc.php';
 
 class SCSSCompiler extends Compiler {
 
@@ -12,10 +13,10 @@ class SCSSCompiler extends Compiler {
 
     /**
      * Constructor
-     * @return scssc
+     * @return \Olegpro\Csscomplier\SCSSCompiler
      */
     public function __construct() {     
-        $this->scssphp = new scssc();
+        $this->scssphp = new \scssc();
     }
 
     /**
