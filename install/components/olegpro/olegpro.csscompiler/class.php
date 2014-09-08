@@ -54,7 +54,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
         $params["CLASS_HANDLER"] = isset($params["CLASS_HANDLER"]) && strlen($params["CLASS_HANDLER"])
             ? $params["CLASS_HANDLER"]
-            : '\Olegpro\Csscomplier\SassCompiler';
+            : '\Olegpro\Csscomplier\SCSSCompiler';
 
         $params['TARGET_FILE_MASK'] = trim($params['TARGET_FILE_MASK']);
         if (!strlen($params['TARGET_FILE_MASK'])) {

@@ -55,7 +55,7 @@ $arComponentParameters = array(
             "NAME" => Loc::getMessage('OP_CS_CLASS_HANDLER'),
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
-            "DEFAULT" => "\Olegpro\Csscomplier\SassCompiler",
+            "DEFAULT" => "\Olegpro\Csscomplier\SCSSCompiler",
             "REFRESH" => "Y",
         ),
 
