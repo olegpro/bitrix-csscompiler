@@ -59,7 +59,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
             : '\Olegpro\Csscompiler\SCSSCompiler';
 
         $params['TARGET_FILE_MASK'] = trim($params['TARGET_FILE_MASK']);
-        if (!strlen($params['TARGET_FILE_MASK'])) {
+        if (!strlen($params['TARGET_FILE_MASK']) || (strpos($params['TARGET_FILE_MASK'] , '%s')) === false) {
             $params['TARGET_FILE_MASK'] = 'styles_%s.css';
         }
 
@@ -113,7 +113,9 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
                     $css .= $this->compiler->toCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"] . $file);
                 }
 
-                $this->compiler->saveToFile($_SERVER["DOCUMENT_ROOT"] . $target, $css);
+                if(!empty($css)){
+                    $this->compiler->saveToFile($_SERVER["DOCUMENT_ROOT"] . $target, $css);
+                }
 
                 if ($this->arParams['REMOVE_OLD_CSS_FILES']) {
                     $this->compiler->removeOldCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"] . sprintf($this->arParams['TARGET_FILE_MASK'], '*'), sprintf($this->arParams['TARGET_FILE_MASK'], $last_modified));

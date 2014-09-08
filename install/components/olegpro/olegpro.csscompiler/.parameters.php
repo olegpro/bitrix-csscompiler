@@ -73,6 +73,14 @@ $arComponentParameters = array(
             "DEFAULT" => "Y",
         ),
 
+        "TARGET_FILE_MASK" => array(
+            "PARENT" => "ADDITIONAL_SETTINGS",
+            "NAME" => Loc::getMessage('OP_CS_TARGET_FILE_MASK'),
+            "TYPE" => "STRING",
+            "MULTIPLE" => "N",
+            "DEFAULT" => "styles_%s.css",
+        ),
+
     ),
 );
 
