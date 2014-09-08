@@ -1,24 +1,31 @@
 ## Csscompiler sass, scss for bitrix
 ===========
 
-Компонент для Bitrix. Компилирует sass(или scss) файлы в готовый css.
+Компонент для Bitrix. Компилирует scss, sass или less файлы в готовый css.
 
-Можно также реализовать, например, компиляцию less файлов. Для этого нужно написать класс, например, LessCompiler. Унаследовать его от класса Compiler, реализовать в нем метод `toCss($file)` и сохранить в папке с компонентом под одноименным названием. И в вызове компонента параметром `CLASS_HANDLER` указать `LessCompiler`.
+Можно также реализовать, например, компиляцию less файлов. Для этого нужно написать класс, например, LessCompiler(пример класс SCSSCompiler). Унаследовать его от класса \Olegpro\Csscompiler\Compiler, реализовать в нем метод `toCss($file)` и сохранить в папке lib модуля `olegpro.csscompiler` под одноименным названием, в нижнем регистре. И в вызове компонента параметром `CLASS_HANDLER` указать `\Olegpro\Csscompiler\LessCompiler`.
 
 
 ## Пример использования
 
 ```php
-<?php $APPLICATION->IncludeComponent("we:csscompiler", ".default", array(
-	"PATH" => "/bitrix/templates/main/sass/",
-	"PATH_CSS" => "/bitrix/templates/main/",
-	"FILES" => array(
-		0 => "styles.sass",
-	),
-	"CLASS_HANDLER" => "SassCompiler",
-	"USE_SETADDITIONALCSS" => "Y",
+<?$APPLICATION->IncludeComponent(
+	"olegpro:olegpro.csscompiler",
+	"",
+	array(
+		"PATH" => "/bitrix/templates/eshop_adapt_blue/scss/",
+		"FILES" => array(
+			0 => "style.scss",
+		),
+		"PATH_CSS" => "/bitrix/templates/eshop_adapt_blue/",
+		"CLASS_HANDLER" => "\\Olegpro\\Csscompiler\\SCSSCompiler",
+		"USE_SETADDITIONALCSS" => "Y",
+		"REMOVE_OLD_CSS_FILES" => "Y",
+		"TARGET_FILE_MASK" => "styles_%s.css"
 	),
 	false,
-    array("HIDE_ICONS" => "Y")
-); ?>
+	array(
+		"HIDE_ICONS" => "N"
+	)
+);?>
 ```
