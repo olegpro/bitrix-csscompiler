@@ -28,7 +28,7 @@ $arComponentParameters = array(
             "NAME" => Loc::getMessage('OP_CS_PATH'),
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
-            "DEFAULT" => "",
+            "DEFAULT" => SITE_TEMPLATE_PATH . '/scss/',
             "REFRESH" => "Y",
         ),
 
@@ -37,7 +37,7 @@ $arComponentParameters = array(
             "NAME" => Loc::getMessage('OP_CS_PATH_CSS'),
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
-            "DEFAULT" => "",
+            "DEFAULT" => SITE_TEMPLATE_PATH . '/',
             "REFRESH" => "Y",
         ),
 
