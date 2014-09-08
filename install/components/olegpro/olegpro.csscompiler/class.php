@@ -13,6 +13,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 class OlegproCSSCompilerComponent extends CBitrixComponent
 {
+    /** @var \Olegpro\Csscompiler\Compiler $compiler */
+    private $compiler;
 
     /**
      * Check Required Modules
@@ -68,7 +70,11 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
     {
         if (!class_exists($this->arParams['CLASS_HANDLER'])) {
             throw new SystemException(sprintf("Class '%s' doesn't exist.", $this->arParams['CLASS_HANDLER']));
-        } elseif (!($this->arParams['CLASS_HANDLER'] instanceof \Olegpro\Csscompiler\Compiler)) {
+        }
+
+        $this->compiler = new $this->arParams['CLASS_HANDLER'];
+
+        if (!($this->compiler instanceof \Olegpro\Csscompiler\Compiler)) {
             throw new SystemException(sprintf("Class '%s' is not a subclass of '\Olegpro\Csscompiler\Compiler'", $this->arParams['CLASS_HANDLER']));
         }
     }
@@ -102,22 +108,19 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             if (!file_exists($_SERVER["DOCUMENT_ROOT"] . $target)) {
 
-                /** @var \Olegpro\Csscompiler\Compiler $compiler */
-                $compiler = new $this->arParams['CLASS_HANDLER'];
-
                 $css = '';
                 foreach ($this->arParams["FILES"] as $file) {
-                    $css .= $compiler->toCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"] . $file);
+                    $css .= $this->compiler->toCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"] . $file);
                 }
 
-                $compiler->saveToFile($_SERVER["DOCUMENT_ROOT"] . $target, $css);
+                $this->compiler->saveToFile($_SERVER["DOCUMENT_ROOT"] . $target, $css);
 
                 if ($this->arParams['REMOVE_OLD_CSS_FILES']) {
-                    $compiler->removeOldCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"] . sprintf($this->arParams['TARGET_FILE_MASK'], '*'), sprintf($this->arParams['TARGET_FILE_MASK'], $last_modified));
+                    $this->compiler->removeOldCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"] . sprintf($this->arParams['TARGET_FILE_MASK'], '*'), sprintf($this->arParams['TARGET_FILE_MASK'], $last_modified));
                 }
 
                 if (\CHTMLPagesCache::IsCompositeEnabled()) {
-                    $compiler->clearAllCHTMLPagesCache();
+                    $this->compiler->clearAllCHTMLPagesCache();
                 }
 
             }
