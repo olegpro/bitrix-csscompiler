@@ -28,16 +28,7 @@ $arComponentParameters = array(
             "NAME" => Loc::getMessage('OP_CS_PATH'),
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
-            "DEFAULT" => SITE_TEMPLATE_PATH . '/scss/',
-            "REFRESH" => "Y",
-        ),
-
-        "PATH_CSS" => array(
-            "PARENT" => "ADDITIONAL_SETTINGS",
-            "NAME" => Loc::getMessage('OP_CS_PATH_CSS'),
-            "TYPE" => "STRING",
-            "MULTIPLE" => "N",
-            "DEFAULT" => SITE_TEMPLATE_PATH . '/',
+            "DEFAULT" => "",
             "REFRESH" => "Y",
         ),
 
@@ -50,13 +41,22 @@ $arComponentParameters = array(
             "VALUES" => $files,
         ),
 
+        "PATH_CSS" => array(
+            "PARENT" => "ADDITIONAL_SETTINGS",
+            "NAME" => Loc::getMessage('OP_CS_PATH_CSS'),
+            "TYPE" => "STRING",
+            "MULTIPLE" => "N",
+            "DEFAULT" => "",
+            "REFRESH" => "N",
+        ),
+
         "CLASS_HANDLER" => array(
             "PARENT" => "ADDITIONAL_SETTINGS",
             "NAME" => Loc::getMessage('OP_CS_CLASS_HANDLER'),
             "TYPE" => "STRING",
             "MULTIPLE" => "N",
             "DEFAULT" => "\Olegpro\Csscompiler\SCSSCompiler",
-            "REFRESH" => "Y",
+            "REFRESH" => "N",
         ),
 
         "USE_SETADDITIONALCSS" => array(
