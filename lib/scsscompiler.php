@@ -1,19 +1,19 @@
 <?php
 
-namespace Olegpro\Csscomplier;
+namespace Olegpro\Csscompiler;
 
 require __DIR__ . '/../libs/scssphp/scss.inc.php';
 
 class SCSSCompiler extends Compiler {
 
     /**
-     * @var scssc
+     * @var \scssc $scssphp
      */
     private $scssphp;
 
     /**
      * Constructor
-     * @return \Olegpro\Csscomplier\SCSSCompiler
+     * @return \Olegpro\Csscompiler\SCSSCompiler
      */
     public function __construct() {     
         $this->scssphp = new \scssc();
@@ -21,7 +21,7 @@ class SCSSCompiler extends Compiler {
 
     /**
      * Parse a scssc file to CSS
-     * @param string path to file
+     * @param string $file path to file
      * @return string CSS
      */
     public function toCss($file) {

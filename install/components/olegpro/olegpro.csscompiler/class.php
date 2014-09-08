@@ -68,7 +68,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
     {
         if (!class_exists($this->arParams['CLASS_HANDLER'])) {
             throw new SystemException(sprintf("Class '%s' doesn't exist.", $this->arParams['CLASS_HANDLER']));
-        } elseif (!($this->arParams['CLASS_HANDLER'] instanceof \Olegpro\Csscomplier\Compiler)) {
+        } elseif (!($this->arParams['CLASS_HANDLER'] instanceof \Olegpro\Csscompiler\Compiler)) {
             throw new SystemException(sprintf("Class '%s' is not a subclass of '\Olegpro\Csscomplier\Compiler'", $this->arParams['CLASS_HANDLER']));
         }
     }
@@ -102,6 +102,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             if (!file_exists($_SERVER["DOCUMENT_ROOT"] . $target)) {
 
+                /** @var \Olegpro\Csscompiler\Compiler $compiler */
                 $compiler = new $this->arParams['CLASS_HANDLER'];
 
                 $css = '';

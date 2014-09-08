@@ -5,7 +5,7 @@
  * Date: 05.09.14 1:00
  */
 
-namespace Olegpro\Csscomplier;
+namespace Olegpro\Csscompiler;
 
 use \Bitrix\Main\SystemException as SystemException;
 
