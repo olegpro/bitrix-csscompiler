@@ -30,8 +30,8 @@ class olegpro_csscompiler extends CModule
         $this->MODULE_NAME = Loc::getMessage("OLEGPRO_CSSCOMPILER_MODULE_NAME");
         $this->MODULE_DESCRIPTION = Loc::getMessage("OLEGPRO_CSSCOMPILER_MODULE_DESCRIPTION");
 
-        $this->PARTNER_NAME = Loc::getMessage("OLEGPRO_CSSCOMPILER_PARTNER_NAME");
-        $this->PARTNER_URI = Loc::getMessage("OLEGPRO_CSSCOMPILER_PARTNER_URI");
+        $this->PARTNER_NAME = GetMessage("OLEGPRO_CSSCOMPILER_PARTNER_NAME");
+        $this->PARTNER_URI = GetMessage("OLEGPRO_CSSCOMPILER_PARTNER_URI");
     }
 
     function GetModuleTasks()
