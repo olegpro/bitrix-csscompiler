@@ -81,6 +81,13 @@ $arComponentParameters = array(
             "DEFAULT" => "styles_%s.css",
         ),
 
+        "SHOW_ERRORS_IN_DISPLAY" => array(
+            "PARENT" => "ADDITIONAL_SETTINGS",
+            "NAME" => Loc::getMessage('OP_CS_SHOW_ERRORS_IN_DISPLAY'),
+            "TYPE" => "CHECKBOX",
+            "DEFAULT" => "Y",
+        ),
+
     ),
 );
 

@@ -63,6 +63,8 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
             $params['TARGET_FILE_MASK'] = 'styles_%s.css';
         }
 
+        $params['SHOW_ERRORS_IN_DISPLAY'] = ($params['SHOW_ERRORS_IN_DISPLAY'] == 'Y');
+
         return $params;
     }
 
@@ -143,14 +145,18 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             }
 
-            if ($this->arParams['USE_SETADDITIONALCSS'] == 'Y') {
+            if ($this->arParams['USE_SETADDITIONALCSS']) {
                 $APPLICATION->SetAdditionalCSS($target);
             } else {
                 echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
             }
 
         } catch (SystemException $e) {
-            ShowError($e->getMessage());
+            if($this->arParams['SHOW_ERRORS_IN_DISPLAY']){
+                ShowError($e->getMessage());
+            }else{
+                AddMessage2Log($e->getMessage(), 'olegpro.csscompiler');
+            }
         }
 
     }
