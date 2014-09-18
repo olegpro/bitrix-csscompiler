@@ -66,7 +66,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
         return $params;
     }
 
-    public function checkHandlerClass()
+    protected function checkHandlerClass()
     {
         if (!class_exists($this->arParams['CLASS_HANDLER'])) {
             throw new SystemException(sprintf("Class '%s' doesn't exist.", $this->arParams['CLASS_HANDLER']));
@@ -76,6 +76,21 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
         if (!($this->compiler instanceof \Olegpro\Csscompiler\Compiler)) {
             throw new SystemException(sprintf("Class '%s' is not a subclass of '\Olegpro\Csscompiler\Compiler'", $this->arParams['CLASS_HANDLER']));
+        }
+    }
+
+    /*
+     * Check the directory needed for component
+     */
+    protected function checkDirs(){
+        if(!is_readable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"])){
+            throw new SystemException(sprintf("'%s' is not a directory or is not readable", $this->arParams['PATH_TO_FILES']));
+        }
+
+        if(!is_readable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"])){
+            throw new SystemException(sprintf("'%s' is not a directory or is not readable", $this->arParams['PATH_TO_FILES_CSS']));
+        }elseif(!is_writable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"])){
+            throw new SystemException(sprintf("'%s' is not writable", $this->arParams['PATH_TO_FILES_CSS']));
         }
     }
 
@@ -89,6 +104,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             $this->checkModules();
             $this->checkHandlerClass();
+            $this->checkDirs();
 
             $last_modified = time();
 
