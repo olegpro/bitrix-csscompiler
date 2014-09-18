@@ -84,13 +84,13 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
      */
     protected function checkDirs(){
         if(!is_readable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"])){
-            throw new SystemException(sprintf("'%s' is not a directory or is not readable", $this->arParams['PATH_TO_FILES']));
+            throw new SystemException(Loc::getMessage('OCSS_ERROR_DIR_NOT_AVAILABLE', array('#DIR#' => $this->arParams["PATH_TO_FILES"])));
         }
 
         if(!is_readable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"])){
-            throw new SystemException(sprintf("'%s' is not a directory or is not readable", $this->arParams['PATH_TO_FILES_CSS']));
+            throw new SystemException(Loc::getMessage('OCSS_ERROR_DIR_NOT_AVAILABLE', array('#DIR#' => $this->arParams["PATH_TO_FILES_CSS"])));
         }elseif(!is_writable($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"])){
-            throw new SystemException(sprintf("'%s' is not writable", $this->arParams['PATH_TO_FILES_CSS']));
+            throw new SystemException(Loc::getMessage('OCSS_ERROR_DIR_NOT_WRITABLE', array('#DIR#' => $this->arParams["PATH_TO_FILES_CSS"])));
         }
     }
 
