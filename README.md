@@ -29,3 +29,5 @@
 	)
 );?>
 ```
+
+Модуль в [Маркетплейсе](http://marketplace.1c-bitrix.ru/solutions/olegpro.csscompiler/).
