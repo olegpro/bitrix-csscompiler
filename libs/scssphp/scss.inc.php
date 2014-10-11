@@ -1,4 +1,7 @@
 <?php
+
+use \Bitrix\Main\SystemException as Exception;
+
 /**
  * SCSS compiler written in PHP
  *
