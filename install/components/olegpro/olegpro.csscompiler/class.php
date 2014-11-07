@@ -135,7 +135,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
                     $this->compiler->saveToFile($_SERVER["DOCUMENT_ROOT"] . $target, $css);
                 }
 
-                if ($this->arParams['REMOVE_OLD_CSS_FILES']) {
+                if ($this->arParams['REMOVE_OLD_CSS_FILES']=="Y") {
                     $this->compiler->removeOldCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES_CSS"] . sprintf($this->arParams['TARGET_FILE_MASK'], '*'), sprintf($this->arParams['TARGET_FILE_MASK'], $last_modified));
                 }
 
@@ -145,14 +145,14 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             }
 
-            if ($this->arParams['USE_SETADDITIONALCSS']) {
+            if ($this->arParams['USE_SETADDITIONALCSS']=="Y") {
                 $APPLICATION->SetAdditionalCSS($target);
             } else {
                 echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
             }
 
         } catch (SystemException $e) {
-            if($this->arParams['SHOW_ERRORS_IN_DISPLAY']){
+            if($this->arParams['SHOW_ERRORS_IN_DISPLAY']=="Y"){
                 ShowError($e->getMessage());
             }else{
                 AddMessage2Log($e->getMessage(), 'olegpro.csscompiler');
