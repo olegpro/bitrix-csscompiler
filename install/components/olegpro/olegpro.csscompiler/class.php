@@ -145,7 +145,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             }
 
-            if ($this->arParams['USE_SETADDITIONALCSS']) {
+            if ($this->arParams['USE_SETADDITIONALCSS']=="Y") {
                 $APPLICATION->SetAdditionalCSS($target);
             } else {
                 echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
