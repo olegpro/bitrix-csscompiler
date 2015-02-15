@@ -126,7 +126,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
 
             if (!file_exists($_SERVER["DOCUMENT_ROOT"] . $target)) {
 
-                $css = '';
+                $css = Loc::getMessage('OCSS_FILE_AUTO_GENERATED', array('#PATH#' => $this->arParams["PATH_TO_FILES"]));
                 foreach ($this->arParams["FILES"] as $file) {
                     $css .= $this->compiler->toCss($_SERVER["DOCUMENT_ROOT"] . $this->arParams["PATH_TO_FILES"] . $file);
                 }
