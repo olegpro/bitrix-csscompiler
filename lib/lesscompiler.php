@@ -4,19 +4,21 @@ namespace Olegpro\Csscompiler;
 
 require __DIR__ . '/../libs/lessphp/lessc.inc.php';
 
-class LessCompiler extends Compiler {
+class LessCompiler extends Compiler
+{
 
     /**
-     * @var \lessc $lessc
+     * @var \lessc $compiler
      */
-    private $lessc;
+    private $compiler;
 
     /**
      * Constructor
      */
-    public function __construct() {     
-        $this->lessc = new \lessc();
-        $this->lessc->setFormatter('compressed');
+    public function __construct()
+    {
+        $this->compiler = new \lessc();
+        $this->compiler->setFormatter('compressed');
     }
 
     /**
@@ -24,9 +26,15 @@ class LessCompiler extends Compiler {
      * @param string $file path to file
      * @return string CSS
      */
-    public function toCss($file) {
-        $this->lessc->setImportDir(dirname($file));
-        return $this->lessc->compileFile($file);
+    public function toCss($file)
+    {
+        $this->compiler->setImportDir(dirname($file));
+        return $this->compiler->compileFile($file);
+    }
+
+    public static function getExtension()
+    {
+        return 'less';
     }
 
 }

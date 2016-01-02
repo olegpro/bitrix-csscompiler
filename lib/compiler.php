@@ -9,12 +9,14 @@ namespace Olegpro\Csscompiler;
 
 use \Bitrix\Main\SystemException as SystemException;
 
-abstract class Compiler{
+abstract class Compiler
+    implements CompilerInterface
+{
 
     /**
-     * @param string $file
+     * Class compiler
      */
-    abstract public function toCss($file);
+    private $compiler;
 
 
     /**
@@ -22,7 +24,8 @@ abstract class Compiler{
      * @param string $content
      * @throws \Bitrix\Main\SystemException
      */
-    public function saveToFile($target, $content) {
+    public function saveToFile($target, $content)
+    {
         if (@ file_put_contents($target, $content) !== false) {
             @ chmod($target, 0666);
         } else {
@@ -33,51 +36,40 @@ abstract class Compiler{
 
     /**
      * @param string $pattern
-     * @param string $current_css
+     * @param string $currentCss
      */
-    public function removeOldCss($pattern, $current_css){
+    public function removeOldCss($pattern, $currentCss)
+    {
         foreach (glob($pattern) as $filename) {
-            if(is_file($filename) && ($basename = pathinfo($filename, PATHINFO_BASENAME)) != $current_css){
+            if (is_file($filename) && ($basename = pathinfo($filename, PATHINFO_BASENAME)) != $currentCss) {
                 @ unlink($filename);
             }
         }
-    }
-
-
-    /**
-     * @param string $css
-     * @return string $css
-     */
-    protected function prepareCss($css){
-
-        $css = preg_replace_callback('/url\(\s*([^\)]+)\s*\)/',
-            function ($match) use ($css) {
-                $file = $match[1];
-                $path = false;
-
-                if (preg_match('~^/.+\.(gif|png|jpe?g)$~i', $file, $match)) {
-                    $path = SITE_TEMPLATE_PATH;
-                }
-
-                if ($path !== false) {
-                    return sprintf('url(%s)', $path . $file);
-                } else {
-                    return sprintf('url(%s)', $file);
-                }
-
-            }, $css
-        );
-
-        return $css;
     }
 
     /**
      * Clear cache composite site
      * @return void
      */
-    public function clearAllCHTMLPagesCache(){
+    public function clearAllCHTMLPagesCache()
+    {
         \CHTMLPagesCache::CleanAll();
         \CHTMLPagesCache::writeStatistic(0, 0, 0, 0, 0);
     }
+
+}
+
+
+interface CompilerInterface {
+
+    /**
+     * @param string $file
+     */
+    public function toCss($file);
+
+    /**
+     * @return string
+     */
+    public static function getExtension();
 
 }

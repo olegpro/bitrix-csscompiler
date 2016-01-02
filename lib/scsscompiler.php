@@ -8,27 +8,28 @@ class SCSSCompiler extends Compiler
 {
 
     /**
-     * @var \Leafo\ScssPhp\Compiler $scssphp
+     * @var \Leafo\ScssPhp\Compiler $compiler
      */
-    private $scssphp;
+    private $compiler;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->scssphp = new \Leafo\ScssPhp\Compiler();
+        $this->compiler = new \Leafo\ScssPhp\Compiler();
 
         $devEnvironment = (isset($_SERVER['ENV']) && in_array(strtolower($_SERVER['ENV']), array('dev', 'demo')));
 
-        $this->scssphp->setFormatter(
+        $this->compiler->setFormatter(
             !$devEnvironment
                 ? '\Leafo\ScssPhp\Formatter\Crunched'
                 : '\Leafo\ScssPhp\Formatter\Expanded'
         );
 
         if ($devEnvironment) {
-            $this->scssphp->setLineNumberStyle(\Leafo\ScssPhp\Compiler::LINE_COMMENTS);
+            $this->compiler->setLineNumberStyle(\Leafo\ScssPhp\Compiler::LINE_COMMENTS);
         }
     }
 
@@ -39,8 +40,14 @@ class SCSSCompiler extends Compiler
      */
     public function toCss($file)
     {
-        $this->scssphp->addImportPath(dirname($file));
-        return ($css = @ file_get_contents($file)) !== false ? $this->scssphp->compile($css) : '';
+        $this->compiler->addImportPath(dirname($file));
+
+        return ($css = @ file_get_contents($file)) !== false ? $this->compiler->compile($css) : '';
+    }
+
+    public static function getExtension()
+    {
+        return 'scss';
     }
 
 }
