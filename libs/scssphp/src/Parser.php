@@ -64,6 +64,7 @@ class Parser
     private $buffer;
     private $utf8;
     private $encoding;
+    private $patternModifiers;
 
     /**
      * Constructor
@@ -76,10 +77,11 @@ class Parser
      */
     public function __construct($sourceName, $sourceIndex = 0, $encoding = 'utf-8')
     {
-        $this->sourceName  = $sourceName ?: '(stdin)';
-        $this->sourceIndex = $sourceIndex;
-        $this->charset     = null;
-        $this->utf8        = ! $encoding || strtolower($encoding) === 'utf-8';
+        $this->sourceName       = $sourceName ?: '(stdin)';
+        $this->sourceIndex      = $sourceIndex;
+        $this->charset          = null;
+        $this->utf8             = ! $encoding || strtolower($encoding) === 'utf-8';
+        $this->patternModifiers = $this->utf8 ? 'Aisu' : 'Ais';
 
         if (empty(self::$operatorPattern)) {
             self::$operatorPattern = '([*\/%+-]|[!=]\=|\>\=?|\<\=\>|\<\=?|and|or)';
@@ -140,11 +142,16 @@ class Parser
      */
     public function parse($buffer)
     {
+        // strip BOM (byte order marker)
+        if (substr($buffer, 0, 3) === "\xef\xbb\xbf") {
+            $buffer = substr($buffer, 3);
+        }
+
+        $this->buffer          = rtrim($buffer, "\x00..\x1f");
         $this->count           = 0;
         $this->env             = null;
         $this->inParens        = false;
         $this->eatWhiteDefault = true;
-        $this->buffer          = rtrim($buffer, "\x00..\x1f");
 
         $this->saveEncoding();
         $this->extractLineNumbers($buffer);
@@ -615,8 +622,8 @@ class Parser
             $this->end()
         ) {
             // check for '!flag'
-            $assignmentFlag = $this->stripAssignmentFlag($value);
-            $this->append([Type::T_ASSIGN, $name, $value, $assignmentFlag], $s);
+            $assignmentFlags = $this->stripAssignmentFlags($value);
+            $this->append([Type::T_ASSIGN, $name, $value, $assignmentFlags], $s);
 
             return true;
         }
@@ -782,7 +789,7 @@ class Parser
             $from = $this->count;
         }
 
-        $r = $this->utf8 ? '/' . $regex . '/Aisu' : '/' . $regex . '/Ais';
+        $r = '/' . $regex . '/' . $this->patternModifiers;
         $result = preg_match($r, $this->buffer, $out, null, $from);
 
         return $result;
@@ -862,7 +869,7 @@ class Parser
             $eatWhitespace = $this->eatWhiteDefault;
         }
 
-        $r = $this->utf8 ? '/' . $regex . '/Aisu' : '/' . $regex . '/Ais';
+        $r = '/' . $regex . '/' . $this->patternModifiers;
 
         if (preg_match($r, $this->buffer, $out, null, $this->count)) {
             $this->count += strlen($out[0]);
@@ -891,22 +898,19 @@ class Parser
             $eatWhitespace = $this->eatWhiteDefault;
         }
 
-        // shortcut on single letter
-        if (! isset($what[1]) && isset($this->buffer[$this->count])) {
-            if ($this->buffer[$this->count] === $what) {
-                if (! $eatWhitespace) {
-                    $this->count++;
+        $len = strlen($what);
 
-                    return true;
-                }
+        if (strcasecmp(substr($this->buffer, $this->count, $len), $what) === 0) {
+            $this->count += $len;
 
-                // goes below...
-            } else {
-                return false;
+            if ($eatWhitespace) {
+                $this->whitespace();
             }
+
+            return true;
         }
 
-        return $this->match($this->pregQuote($what), $m, $eatWhitespace);
+        return false;
     }
 
     /**
@@ -2288,25 +2292,29 @@ class Parser
      *
      * @param array $value
      *
-     * @return string
+     * @return array
      */
-    protected function stripAssignmentFlag(&$value)
+    protected function stripAssignmentFlags(&$value)
     {
-        $token = &$value;
+        $flags = [];
 
         for ($token = &$value; $token[0] === Type::T_LIST && ($s = count($token[2])); $token = &$lastNode) {
             $lastNode = &$token[2][$s - 1];
 
-            if ($lastNode[0] === Type::T_KEYWORD && in_array($lastNode[1], ['!default', '!global'])) {
+            while ($lastNode[0] === Type::T_KEYWORD && in_array($lastNode[1], ['!default', '!global'])) {
                 array_pop($token[2]);
+
+                $node = end($token[2]);
 
                 $token = $this->flattenList($token);
 
-                return $lastNode[1];
+                $flags[] = $lastNode[1];
+
+                $lastNode = $node;
             }
         }
 
-        return false;
+        return $flags;
     }
 
     /**
