@@ -7,3 +7,4 @@ $MESS['OP_CS_USE_SETADDITIONALCSS'] = 'Подключать скомпилиро
 $MESS['OP_CS_REMOVE_OLD_CSS_FILES'] = 'Удалять старые скопилированные css файлы?';
 $MESS['OP_CS_TARGET_FILE_MASK'] = 'Маска файла для записи css файла. (%s обязателен, он заменится на таймштамп файла)';
 $MESS['OP_CS_SHOW_ERRORS_IN_DISPLAY'] = 'Выводить ошибки работы компонента на экран. Если не выбрать, то ошибки будут писаться в лог файл функцией AddMessage2Log()';
+$MESS['OP_CS_ADD_CSS_TO_THE_END'] = 'Добавлять стили в конец если используется CMain::SetAdditionalCSS()';

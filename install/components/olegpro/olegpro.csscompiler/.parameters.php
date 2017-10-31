@@ -68,6 +68,12 @@ $arComponentParameters = array(
             'DEFAULT' => 'Y',
         ),
 
+        'ADD_CSS_TO_THE_END' => array(
+            'PARENT' => 'BASE',
+            'NAME' => Loc::getMessage('OP_CS_ADD_CSS_TO_THE_END'),
+            'TYPE' => 'CHECKBOX',
+            'DEFAULT' => 'Y',
+        ),
         'REMOVE_OLD_CSS_FILES' => array(
             'PARENT' => 'BASE',
             'NAME' => Loc::getMessage('OP_CS_REMOVE_OLD_CSS_FILES'),

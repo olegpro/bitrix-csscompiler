@@ -20,6 +20,7 @@
 		"PATH_CSS" => "/bitrix/templates/eshop_adapt_blue/",
 		"CLASS_HANDLER" => "\\Olegpro\\Csscompiler\\SCSSCompiler",
 		"USE_SETADDITIONALCSS" => "Y",
+		"ADD_CSS_TO_THE_END" => "Y",
 		"REMOVE_OLD_CSS_FILES" => "Y",
 		"TARGET_FILE_MASK" => "styles_%s.css"
 	),
