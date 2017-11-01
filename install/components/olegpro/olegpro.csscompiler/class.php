@@ -43,7 +43,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
     {
         $params['USE_SET_ADDITIONAL_CSS'] = ($params['USE_SETADDITIONALCSS'] == 'Y');
 
-        $params['ADD_CSS_TO_THE_END'] = ($params['ADD_CSS_TO_THE_END'] == 'Y');
+        $params['ADD_CSS_TO_THE_END'] = isset($params['ADD_CSS_TO_THE_END']) && ($params['ADD_CSS_TO_THE_END'] == 'Y');
 
         $params['REMOVE_OLD_CSS_FILES'] = ($params['REMOVE_OLD_CSS_FILES'] == 'Y');
 
