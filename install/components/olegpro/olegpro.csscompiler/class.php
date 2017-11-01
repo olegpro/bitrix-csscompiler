@@ -43,6 +43,8 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
     {
         $params['USE_SET_ADDITIONAL_CSS'] = ($params['USE_SETADDITIONALCSS'] == 'Y');
 
+        $params['ADD_CSS_TO_THE_END'] = isset($params['ADD_CSS_TO_THE_END']) && ($params['ADD_CSS_TO_THE_END'] == 'Y');
+
         $params['REMOVE_OLD_CSS_FILES'] = ($params['REMOVE_OLD_CSS_FILES'] == 'Y');
 
         $params['FILES'] = is_array($params['FILES']) ? $params['FILES'] : array();
@@ -190,7 +192,7 @@ class OlegproCSSCompilerComponent extends CBitrixComponent
             }
 
             if ($this->arParams['USE_SETADDITIONALCSS']) {
-                Main\Page\Asset::getInstance()->addCss($target);
+                Main\Page\Asset::getInstance()->addCss($target, $this->arParams['ADD_CSS_TO_THE_END']);
             } else {
                 echo sprintf('<link rel="stylesheet" href="%s" type="text/css">', $target);
             }
